@@ -32,7 +32,10 @@ PC-8801mkIISR(以下、PC-88)とRS-232Cケーブルで接続し、簡単なサ�
 
 # 実行結果など
 
-* [ログの例](log/mem_rw.txt)
+* ログの例 (いつ実行したかわからないものをターミナルのバッファから救済した物)
+  * [mem_rw0.txt](log/mem_rw0.txt)
+  * [mem_rw1.txt](log/mem_rw1.txt)
+  * [mem_rw2.txt](log/mem_rw2.txt)
 * [上記からの考察](doc/OPNA.md)
 # その他
 
