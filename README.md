@@ -21,7 +21,7 @@ PC-8801mkIISR(以下、PC-88)とRS-232Cケーブルで接続し、簡単なサ�
 * PC-88をシリアルポートからプログラムをロード待ちにする。
   * (PC-88): LOAD "COM:N81"
 * ホストからサーバプログラムを転送する。
-  * (Host): ./util/upload.py basic/rsopna.bas
+  * (Host): python ./util/upload.py basic/rsopna.bas
   * (PC-88): 頃合いを見計らって、STOPで停止。
 * サーバプログラムを実行する。
   * (PC-88): RUN
