@@ -1,0 +1,42 @@
+import RsOPNA
+import time
+
+rs = RsOPNA.RsOPNA()
+rs.open()
+
+rs.out0(0x00, 0x00)
+rs.out0(0x01, 0x01)
+rs.nl()
+rs.out0(0x0b, 0x00)
+rs.out0(0x0c, 0x01)
+rs.out0(0x0d, 0x0e)
+rs.nl()
+
+rs.out0(0x07, 0x3e)
+rs.out0(0x08, 0x00)
+rs.out0(0x09, 0x00)
+rs.out0(0x0a, 0x00)
+rs.nl()
+
+for i in range(16):
+    rs.out0(0x08, i).nl()
+time.sleep(0.5)
+for i in reversed(range(16)):
+    rs.out0(0x08, i).nl()
+
+
+rs.out0(0x07, 0x3f)
+rs.out0(0x08, 0x00)
+rs.out0(0x09, 0x00)
+rs.out0(0x0a, 0x00)
+rs.nl()
+
+for i in range(16):
+    rs.out0(0x08, i).nl()
+time.sleep(0.5)
+for i in reversed(range(16)):
+    rs.out0(0x08, i).nl()
+
+rs.out0(0x08, 0x1f).nl()
+time.sleep(0.5)
+rs.out0(0x08, 0x00).nl()

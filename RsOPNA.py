@@ -53,6 +53,21 @@ class RsOPNA:
         self.send(cmd)
         return self
 
+    def out0(self, reg, data):
+        cmd = "6,{:02X},{:02X}\r".format(reg, data)
+        self.send(cmd)
+        return self
+
+    def inp0(self, reg):
+        cmd = "7,{:02X}\r".format(reg)
+        self.sned(cmd)
+        return self
+
+    def stat0(self):
+        cmd = "8\r"
+        self.send(cmd)
+        return self
+
     def mwr(self, data, count):
         cmd = "10,{:02X},{:d}\r".format(data, count)
         self.send(cmd)
@@ -102,6 +117,20 @@ class RsOPNA:
             self.out(0x08, data)
         self.out(0x00, 0x00).out(0x10, 0x80).nl()
 
+    def seq_mem_fill_pat(self, start, stop, pat, count, msg):
+        self.msg(msg)
+        self.out(0x10, 0x00).out(0x10, 0x80)
+        self.out(0x00, 0x60).out(0x01, 0x02)
+        self.out(0x02, start & 0xff).out(0x03, (start >> 8) & 0xff)
+        self.out(0x04, stop & 0xff).out(0x05, (stop >> 8) & 0xff)
+        self.nl()
+        l = len(pat)
+        for i in range(count):
+            if (i % 16) == 0:
+                print("\n{:05x} ".format(i), end="")
+            self.out(0x08, pat[i % l])
+        self.out(0x00, 0x00).out(0x10, 0x80).nl()
+
     def seq_mem_fill_random(self, start, stop, count, msg):
         self.msg(msg)
         self.out(0x10, 0x00).out(0x10, 0x80)
@@ -132,4 +161,5 @@ class RsOPNA:
 
     def seq_stop(self, msg):
         self.msg(msg)
+        self.out(0x00, 0xa1)
         self.out(0x00, 0x00).out(0x10, 0x80).nl()
