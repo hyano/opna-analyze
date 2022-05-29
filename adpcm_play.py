@@ -12,11 +12,14 @@ def mem_set(pat, adr, msg):
 
 
 def test(adr, rep, msg):
-    rs.seq_play(adr, adr, int(500), 0xff, rep, "PLAY " + msg)
+    rs.seq_play(adr, adr, int(512), 0xc0, rep, "PLAY " + msg)
     time.sleep(0.5)
     rs.seq_stop("STOP")
     #time.sleep(0.2)
 
+silence = []
+for i in range(32):
+    silence.append(0x80)
 
 pat_orig = [
     0x77, 0x77,
@@ -41,6 +44,9 @@ pat_orig = [
 ]
 
 t=0
+pat = silence
+mem_set(pat, t, "PAT {:d}".format(t))
+t+=1
 pat = pat_orig
 mem_set(pat, t, "PAT {:d}".format(t))
 t+=1
