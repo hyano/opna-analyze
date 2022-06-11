@@ -12,6 +12,7 @@ def mem_set(pat, adr, msg):
 
 
 def test(adr, rep, msg):
+    rs.seq_mem_limit(adr*2)
     rs.seq_play(adr*2, adr*2+1, int(512), 0xff, rep, "PLAY " + msg)
     #time.sleep(1.0)
     rs.poll_stat(1.0)
@@ -65,12 +66,15 @@ pat_orig = [
 ]
 
 t=0
+silence[0] = 0x7f
+silence[1] = 0x7f
 pat = silence
 mem_set(pat, t, "PAT {:d}".format(t))
 t+=1
 pat = pat_orig
 mem_set(pat, t, "PAT {:d}".format(t))
 t+=1
+'''
 pat[63] = 0x77
 mem_set(pat, t, "PAT {:d}".format(t))
 t+=1
@@ -91,7 +95,7 @@ t+=1
 pat[61] = 0x77
 mem_set(pat, t, "PAT {:d}".format(t))
 t+=1
-
+'''
 
 for i in range(0, t):
     test(i, False, "TEST {:d}".format(i))
