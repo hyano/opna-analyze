@@ -12,9 +12,11 @@ def mem_set(pat, adr, msg):
 
 
 def test(adr, rep, msg):
-    rs.seq_play(adr, adr, int(512), 0xc0, rep, "PLAY " + msg)
-    time.sleep(0.5)
+    rs.seq_play(adr, adr, int(512), 0xff, rep, "PLAY " + msg)
+    #time.sleep(0.5)
+    rs.poll_stat(0.5)
     rs.seq_stop("STOP")
+    #rs.poll_stat(0.1)
     #time.sleep(0.2)
 
 silence = []

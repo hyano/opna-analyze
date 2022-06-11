@@ -68,6 +68,13 @@ class RsOPNA:
         self.send(cmd)
         return self
 
+    def poll_stat(self, wt):
+        cmd = "9\r"
+        self.ser.write(cmd.encode())
+        time.sleep(wt)
+        self.send("\r")
+        return self
+
     def mwr(self, data, count):
         cmd = "10,{:02X},{:d}\r".format(data, count)
         self.send(cmd)
@@ -146,7 +153,7 @@ class RsOPNA:
 
     def seq_play(self, start, stop, deltan, volume, repeat, msg):
         self.msg(msg)
-        self.out(0x10, 0x08).out(0x10, 0x80)
+        self.out(0x10, 0x00).out(0x10, 0x80)
         self.out(0x00, 0x20)
         self.out(0x01, 0xc2)
         self.out(0x02, start & 0xff).out(0x03, (start >> 8) & 0xff)
@@ -161,5 +168,5 @@ class RsOPNA:
 
     def seq_stop(self, msg):
         self.msg(msg)
-        self.out(0x00, 0xa1)
-        self.out(0x00, 0x00).out(0x10, 0x80).nl()
+        self.out(0x00, 0xa1).poll_stat(0.1)
+        self.out(0x00, 0x00).poll_stat(0.1).out(0x10, 0x80).poll_stat(0.1).nl()

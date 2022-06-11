@@ -1,0 +1,31 @@
+    org 0xe000
+
+    di
+loop0:
+    in  a,(0xac)
+    in  a,(0x21)
+    and 0x02
+    jp  z,loop0
+    ei
+    ret
+
+    nop
+    nop
+    nop
+    nop
+
+    di
+    ld  b,0xff
+loop1:
+    in  a,(0xac)
+    in  a,(0x21)
+    and 0x02
+    jr  nz,exit1
+    in  a,(0x09)
+    xor b
+    jp  nz,loop1
+exit1:
+    ei
+    ret
+
+    end
