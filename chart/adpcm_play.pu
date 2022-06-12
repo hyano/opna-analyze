@@ -1,0 +1,135 @@
+@startuml
+Title Play 32bytes ADPCM data without repeating
+
+scale 100 as 100 pixels
+hide time-axis
+
+concise "OPNA register write" as OPNA
+concise "ADPCM output" as OUT
+binary "status:EOS" as EOS
+binary "status:PCMBUSY" as PCMBUSY
+binary "MDEN" as MDEN
+concise "read data from memory" as RD
+
+@0 as :start
+@800 as :lasthalf
+@1300 as :stopseq
+
+'----------------------------------------------------------------
+
+@:start
+OPNA is "R00:$A0"
+note top of OPNA: START 
+OUT is {-}
+@+90
+OPNA is {-}
+PCMBUSY is high
+MDEN is high
+RD is "D0D1"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+100
+OPNA is {-}
+OUT is "0->D0"
+@+90
+MDEN is high
+RD is "D2D3"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+200
+OUT is "->D1"
+
+@:start+300
+OPNA is {-}
+OUT is "->D2"
+@+90
+MDEN is high
+RD is "D4D5"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+400
+OUT is "->D3"
+
+@:start+500
+OPNA is {-}
+OUT is "->D4"
+@+90
+MDEN is high
+RD is "D6D7"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+600
+OUT is "->D5"
+
+@:start+700
+note top of OPNA: snip
+OPNA is {hidden}
+OUT is {hidden}
+MDEN is {hidden}
+RD is {hidden}
+
+'----------------------------------------------------------------
+
+highlight 700 to 800 #Gray
+
+'----------------------------------------------------------------
+
+@:lasthalf
+OPNA is {-}
+OUT is "->D58"
+@+90
+MDEN is high
+RD is "D60D61"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:lasthalf+100
+OPNA is {-}
+OUT is "->D59"
+
+@:lasthalf+200
+OPNA is {-}
+OUT is "->D60"
+
+@:lasthalf+300
+note top of OUT: D61,62.63 are not played
+OUT is "D60"
+EOS is high
+note bottom of RD: D62D63 are not fetched
+
+
+'----------------------------------------------------------------
+
+@:stopseq
+OPNA is "R00:$A1"
+note top of OPNA: STOP
+@+70
+OPNA is {-}
+@:stopseq+100
+OPNA is "R00:$00"
+@+70
+OPNA is {-}
+OUT is {-}
+PCMBUSY is low
+@:stopseq+200
+OPNA is "R10:$80"
+@+70
+OPNA is {-}
+EOS is low
+
+
+@enduml
