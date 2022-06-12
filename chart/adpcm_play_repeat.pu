@@ -18,7 +18,7 @@ concise "read data from memory" as RD
 '----------------------------------------------------------------
 
 @:start
-OPNA is "R00:$A0"
+OPNA is "R00:$B0"
 note top of OPNA: START 
 OUT is {-}
 RD is {-}
