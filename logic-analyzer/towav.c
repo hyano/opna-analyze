@@ -69,12 +69,13 @@ int main(int argc, char *argv[])
     int opt;
     bool opt_s = false;
     bool opt_m = false;
+    bool opt_w = false;
 
     char fname[128] = "test_pcm.wav";
     char fname_stat[128] = "test_stat.wav";
     char fname_opt[128] = "test_opt.wav";
 
-    while ((opt = getopt(argc, argv, "o:l:sm")) != -1)
+    while ((opt = getopt(argc, argv, "o:l:smw")) != -1)
     {
         switch (opt)
         {
@@ -91,6 +92,9 @@ int main(int argc, char *argv[])
             break;
         case 'm':
             opt_m = true;
+            break;
+        case 'w':
+            opt_w = true;
             break;
         default:
             printf("Options:\n");
@@ -220,6 +224,11 @@ int main(int argc, char *argv[])
             if (start == 0)
             {
                 start++;
+                if (!opt_w)
+                {
+                    printf("start (%04x:%04x)\n", sample_ch1, sample_ch2);
+                    start++;
+                }
             }
             else if (start  == 1)
             {
