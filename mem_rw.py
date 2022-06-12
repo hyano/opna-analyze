@@ -51,6 +51,79 @@ rs = RsOPNA.RsOPNA()
 rs.open()
 rs.reset()
 
+'''
+1. WRITE ADDRESS 0000-0000 (00-1F)
+2. WRITE ADDRESS 0fff-1000 (40-7F)
+3. WRITE ADDRESS 0fff-0xfff x 2 (80-9F/A0-BF)
+    START ADDRESSに戻ることが確認できる
+    STOP ADDRESSに到達したときにEOSビットが1になる
+4. WRITE ADDRESS 1fff-1fff (C0-DF)
+
+書き込み後のメモリの状態
+    0000 00-1F
+    0fff A0-BF
+    1000 60-7F
+    1fff C0-DF
+
+5. READ ADDRESS 0000-0000
+    データは00-1F(EOS)
+    ダミーリード(DF,DF,00,01)
+
+6. READ ADDRESS 0fff-1000
+    データはA0-BF,60-7F(EOS)
+    ダミーリード(1F,1F,A0,A1)
+
+7. READ ADDRESS 0fff-0xfff x 2
+    データはA0-BF(EOS),BF,BF,A0-BF(EOS)
+    ダミーリード(7F,7F,A0,A1)
+    STOP ADDRESS後にダミーリードが挟まる(BF,BF)
+    STOP ADDRESSに到達したときにEOSビットが1になる
+
+8. READ ADDRESS 0fff- CHANGE START(1)
+    読み出し後にSTART ADDRESSを0fffから1000に書き換えるテスト
+    1バイト読んだ後で、STARTアドレスを1000に変更するが、変化はしない(ダミーリード中を狙う)
+    データはA0-BF,60-7F(EOS),7F,7F,60-7F(EOS)
+    STOP ADDRESSに到達したら、新しいSTART ADDRESS(1000)に戻ることを確認
+    ダミーリード(7F,7F,A0,A1)
+    STOP ADDRESS後にダミーリードが挟まる(7F,7F)
+    STOP ADDRESSに到達したときにEOSビットが1になる
+
+9. READ ADDRESS 0fff- CHANGE START(10)
+    読み出し後にSTART ADDRESSを0fffから1000に書き換えるテスト
+    10バイト読んだ後で、STARTアドレスを1000に変更するが、変化はしない(ダミーリード後を狙う)
+    データはA0-BF,60-7F(EOS),7F,7F,60-7F(EOS)
+    STOP ADDRESSに到達したら、新しいSTART ADDRESS(1000)に戻ることを確認
+    ダミーリード(7F,7F,A0,A1)
+    STOP ADDRESS後にダミーリードが挟まる(7F,7F)
+    STOP ADDRESSに到達したときにEOSビットが1になる
+
+10. READ ADDRESS 0fff- CHANGE START(10/RESET)
+    読み出し後にSTART ADDRESSを0fffから0000に書き換えるテスト
+    10バイト読んだ後で、STARTアドレスを0000に変更するが、変化はしない(ダミーリード後を狙う)
+    データはA0-BF,60-7F(EOS),7F,7F,00-1F(no EOS)
+    STOP ADDRESSに到達したら、新しいSTART ADDRESS(0000)に戻ることを確認
+    ダミーリード(7F,7F,A0,A1)
+    STOP ADDRESS後にダミーリードが挟まる(7F,7F)
+    STOP ADDRESSに到達したときにEOSビットが1になる
+    折り返した後、STOP ADDRESSに到達する前に読み出しを止めるので、その後リセットで復帰させる
+
+11. READ ADDRESS 0fff- CHANGE STOP
+    読み出し後にSTOP ADDRESSを0fffから1000に書き換えるテスト
+    10バイト読んだ後で、STOPアドレスを1000に変更すると、0fff終端に達しても、止まらず進む
+    データはA0-BF,60-7F(EOS),7F,7F,A0-BF,60-7F(EOS)
+
+12. READ ADDRESS 1fff-1fff
+    データはC0-DF(EOS)
+    ダミーリード(7F,7F,C0,C1)
+
+13. READ ADDRESS 0000-0000 (10 WRITE)
+    10バイト読み出し後、レジスタ08にダミーデータ(0xCC)を書き込み、その後読み出しを継続する
+    データは00-07,(XX),09-1F(EOS),1F,1F,00-1F(EOS)
+    ダミーデータの書き込みでアドレスが進んでいるが、書き込みは行われないことを2周目のREADで確認できる
+    MDEN信号は動いているが読み出しになっているのではないかと推測する
+
+'''
+
 rs.seq_mem_limit(0xffff)
 rs.seq_mem_write(0x0000, 0x0000, 0x00, 32, "WRITE ADDRESS 0000-0000 (00-1F)")
 rs.seq_mem_write(0x0fff, 0x1000, 0x40, 64, "WRITE ADDRESS 0fff-1000 (40-7F)")
