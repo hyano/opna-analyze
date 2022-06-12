@@ -21,6 +21,7 @@ concise "read data from memory" as RD
 OPNA is "R00:$A0"
 note top of OPNA: START 
 OUT is {-}
+RD is {-}
 @+90
 OPNA is {-}
 PCMBUSY is high
@@ -89,6 +90,7 @@ highlight 700 to 800 #Gray
 @:lasthalf
 OPNA is {-}
 OUT is "->D58"
+RD is {-}
 @+90
 MDEN is high
 RD is "D60D61"
@@ -164,7 +166,7 @@ OPNA is "R00:$A1"
 note top of OPNA: STOP
 @+70
 OPNA is {-}
-OUT is "D3"
+OUT is "~D3"
 @:stopseq+100
 OPNA is "R00:$00"
 @+70
