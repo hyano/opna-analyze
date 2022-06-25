@@ -67,14 +67,14 @@ rs.reset()
 
 5. READ ADDRESS 0fff- CHANGE STOP (31)
     読み出し開始後にSTOP ADDRESSを0fffから1000に書き換えるテスト
-    31バイト読んだ後で、STOPアドレスを1000に変更すると、0fff終端に達しても、止まらず進む
-    データはA0-BF,60-7F(EOS),7F,7F,A0-BF,60-7F(EOS)
+    31バイト読んだ後で、STOPアドレスを1000に変更すると、0fff終端に達しても、止まらず進む(STOP ADDRESS書き換えが有効)
+    データはA0-BC/BD-BF,60-7F(EOS),7F,7F,A0-BF,60-7F(EOS)
     ダミーリード(DF,DF,A0,A1)
 
 6. READ ADDRESS 0fff- CHANGE STOP (32)
     読み出し開始後にSTOP ADDRESSを0fffから1000に書き換えるテスト
-    32バイト読んだ後で、STOPアドレスを1000に変更しても0fff終端に達しても、止まらず進む
-    データはA0-BF(EOS),BF,BF,A0-BF,60-7F(EOS),7F,7F,A0-BF,60-7F(EOS)
+    32バイト読んだ後で、STOPアドレスを1000に変更しても0fff終端に達するとSTART ADDRESSに戻る(STOP ADDRESS書き換えが無効)
+    データはA0-BD/BE-BF(EOS),BF,BF,A0-BF,60-7F(EOS),7F,7F,A0-BF,60-7F(EOS)
     ダミーリード(7F,7F,A0,A1)
 
 7. READ ADDRESS 0fff- CHANGE STOP (33)
@@ -82,6 +82,10 @@ rs.reset()
 
 8. READ ADDRESS 0fff- CHANGE STOP (34)
     6と同様の結果
+
+全体
+    ダミーリード込みで32バイト目の読み出し時、
+    つまり、メモリからの読み出しのタイミングで、STOP ADDRESSのチェックをしている。
 
 '''
 
