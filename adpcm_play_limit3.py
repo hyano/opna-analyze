@@ -5,6 +5,27 @@ rs = RsOPNA.RsOPNA()
 rs.open()
 rs.reset()
 
+'''
+LIMIT ADDRESS到達時の挙動の確認
+(adpcm_play_limit.pyの無音データの先頭のマークのデータを変えて、境界確認)
+
+書き込み後のメモリの状態
+    0000-0001 無音データ(先頭にマーク(71 c9))
+    0002-0003 テスト波形(先頭)
+
+
+以下の関係で再生し、0番地に戻る際の挙動を確認する。
+TEST=1
+    START = 0000
+    LIMIT = 0000
+    STOP  = 0001
+
+TEST=2
+    START = 0002
+    LIMIT = 0002
+    STOP  = 0003
+'''
+
 rs.seq_mem_limit(0xffff)
 
 def mem_set(pat, adr, msg):
