@@ -15,12 +15,12 @@ LIMIT ADDRESS到達時の挙動の確認
 
 
 以下の関係で再生し、0番地に戻る際の挙動を確認する。
-TEST=1
+TEST 0
     START = 0000
     LIMIT = 0000
     STOP  = 0001
 
-TEST=2
+TEST 1
     START = 0002
     LIMIT = 0002
     STOP  = 0003

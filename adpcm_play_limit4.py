@@ -15,12 +15,12 @@ STOP ADDRESSと同じにして、どちらが先に判定されるかを確認�
 
 
 以下の関係で再生し、0番地に戻る際の挙動を確認する。
-TEST=1
+TEST 0
     START = 0000
     LIMIT = 0001
     STOP  = 0001
 
-TEST=2
+TEST 1
     START = 0002
     LIMIT = 0003
     STOP  = 0003
