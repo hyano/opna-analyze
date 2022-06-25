@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     uint32_t data;
     uint32_t prev = 0xffffffff;
     uint32_t diff;
-    uint16_t sample;
+    uint16_t sample = 0;
     int16_t sample_ch1 = 0;
     int16_t sample_ch2 = 0;
     uint32_t start = 0;
@@ -226,7 +226,7 @@ int main(int argc, char *argv[])
                 start++;
                 if (!opt_w)
                 {
-                    printf("start (%04x:%04x)\n", sample_ch1, sample_ch2);
+                    printf("start no wait (%04x:%04x)\n", sample_ch1, sample_ch2);
                     start++;
                 }
             }
