@@ -22,11 +22,18 @@ OPNA is "R00:$A0"
 note top of OPNA: START 
 OUT is {-}
 RD is {-}
-@+90
+@+10
+PCMBUSY is high
+RD is "D0D1"
+@+60
+MDEN is high
+@+10
+MDEN is low
+@+10
 OPNA is {-}
 PCMBUSY is high
 MDEN is high
-RD is "D0D1"
+RD is "D2D3"
 @+10
 MDEN is low
 @+70
@@ -37,7 +44,7 @@ OPNA is {-}
 OUT is "0->D0"
 @+90
 MDEN is high
-RD is "D2D3"
+RD is "D4D5"
 @+10
 MDEN is low
 @+70
@@ -51,7 +58,7 @@ OPNA is {-}
 OUT is "->D2"
 @+90
 MDEN is high
-RD is "D4D5"
+RD is "D6D7"
 @+10
 MDEN is low
 @+70
@@ -65,7 +72,7 @@ OPNA is {-}
 OUT is "->D4"
 @+90
 MDEN is high
-RD is "D6D7"
+RD is "D8D9"
 @+10
 MDEN is low
 @+70
@@ -89,7 +96,7 @@ highlight 700 to 800 #Gray
 
 @:lasthalf
 OPNA is {-}
-OUT is "->D60"
+OUT is "->D58"
 RD is {-}
 @+90
 MDEN is high
@@ -101,12 +108,12 @@ RD is {-}
 
 @:lasthalf+100
 OPNA is {-}
-OUT is "->D61"
+OUT is "->D59"
 
 
 @:lasthalf+200
 OPNA is {-}
-OUT is "->D62"
+OUT is "->D60"
 @+90
 MDEN is high
 RD is "X0X1"
@@ -118,11 +125,11 @@ RD is {-}
 
 @:lasthalf+300
 OPNA is {-}
-OUT is "->D63"
+OUT is "->D61"
 
 @:lasthalf+400
 OPNA is {-}
-OUT is "->X0"
+OUT is "->D62"
 @+90
 MDEN is high
 RD is "X2X3"
@@ -133,12 +140,12 @@ RD is {-}
 
 @:lasthalf+500
 OPNA is {-}
-OUT is "->X1"
+OUT is "->D63"
 
 
 @:lasthalf+600
 OPNA is {-}
-OUT is "->X2"
+OUT is "->X0"
 @+90
 MDEN is high
 RD is "X4X5"
@@ -155,11 +162,11 @@ RD is {-}
 
 @:stopseq
 OPNA is "R00:$A1"
-OUT is "->X3"
+OUT is "->X1"
 note top of OPNA: STOP
 @+70
 OPNA is {-}
-OUT is "~X3"
+OUT is "~X1"
 EOS is high
 @:stopseq+100
 OPNA is "R00:$00"

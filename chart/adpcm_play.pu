@@ -22,11 +22,18 @@ OPNA is "R00:$A0"
 note top of OPNA: START 
 OUT is {-}
 RD is {-}
-@+90
+@+10
+PCMBUSY is high
+RD is "D0D1"
+@+60
+MDEN is high
+@+10
+MDEN is low
+@+10
 OPNA is {-}
 PCMBUSY is high
 MDEN is high
-RD is "D0D1"
+RD is "D2D3"
 @+10
 MDEN is low
 @+70
@@ -37,7 +44,7 @@ OPNA is {-}
 OUT is "0->D0"
 @+90
 MDEN is high
-RD is "D2D3"
+RD is "D4D5"
 @+10
 MDEN is low
 @+70
@@ -51,7 +58,7 @@ OPNA is {-}
 OUT is "->D2"
 @+90
 MDEN is high
-RD is "D4D5"
+RD is "D6D7"
 @+10
 MDEN is low
 @+70
@@ -65,7 +72,7 @@ OPNA is {-}
 OUT is "->D4"
 @+90
 MDEN is high
-RD is "D6D7"
+RD is "D8D9"
 @+10
 MDEN is low
 @+70
@@ -93,7 +100,7 @@ OUT is "->D58"
 RD is {-}
 @+90
 MDEN is high
-RD is "D60D61"
+RD is "D62D63"
 @+10
 MDEN is low
 @+70
@@ -111,7 +118,6 @@ OUT is "->D60"
 note top of OUT: D61,62.63 are not played
 OUT is "D60"
 EOS is high
-note bottom of RD: D62D63 are not fetched
 
 
 '----------------------------------------------------------------
