@@ -1,0 +1,174 @@
+@startuml
+Title Read 32bytes ADPCM data from external memory with repeating
+
+scale 100 as 100 pixels
+hide time-axis
+
+concise "OPNA register write" as OPNA
+concise "OPNA register R08 read" as OUT
+binary "status:EOS" as EOS
+binary "MDEN" as MDEN
+concise "read data from memory" as RD
+
+@0 as :start
+@800 as :lasthalf
+@1400 as :stopseq
+
+'----------------------------------------------------------------
+
+@:start
+OPNA is "ADDRESS"
+note top of OPNA: START 
+OUT is {-}
+RD is {-}
+
+@:start+100
+OPNA is {-}
+OUT is "DUMMY"
+note top of OUT: dummy read x 2
+OUT -> MDEN@+30
+@+30
+MDEN is high
+RD is "D0D1"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+200
+OUT is "DUMMY"
+OUT -> MDEN@+30
+@+30
+MDEN is high
+RD is "D2D3"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+300
+OUT is "D0D1"
+OUT -> MDEN@+30
+@+30
+MDEN is high
+RD is "D4D5"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+400
+OUT is "D2D3"
+OUT -> MDEN@+30
+@+30
+MDEN is high
+RD is "D6D7"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+500
+OUT is "D4D5"
+@+30
+MDEN is high
+RD is "D8D9"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+600
+OUT is "D6D7"
+@+30
+MDEN is high
+RD is "D10D11"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+700
+note top of OPNA: snip
+OPNA is {hidden}
+OUT is {hidden}
+MDEN is {hidden}
+RD is {hidden}
+
+'----------------------------------------------------------------
+
+highlight 700 to 800 #Gray
+
+'----------------------------------------------------------------
+
+@:lasthalf
+OPNA is {-}
+OUT is "D58D59"
+RD is {-}
+OUT -> MDEN@+30
+@+30
+MDEN is high
+RD is "D62D63"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:lasthalf+100
+OPNA is {-}
+OUT is "D60D61"
+note top of OUT: no memory access
+
+@:lasthalf+200
+OPNA is {-}
+OUT is "D62D63"
+
+@:lasthalf+300
+'OUT is {-}
+EOS is high
+
+
+'----------------------------------------------------------------
+
+@1000 as :start
+
+@:start+100
+OPNA is {-}
+OUT is "DUMMY"
+note top of OUT: dummy read x 2
+OUT -> MDEN@+30
+@+30
+MDEN is high
+RD is "D0D1"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+200
+OUT is "DUMMY"
+OUT -> MDEN@+30
+@+30
+MDEN is high
+RD is "D2D3"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+300
+OUT is "D0D1"
+OUT -> MDEN@+30
+@+30
+MDEN is high
+RD is "D4D5"
+@+10
+MDEN is low
+@+70
+RD is {-}
+
+@:start+400
+OUT is {-}
+
+
+@enduml
