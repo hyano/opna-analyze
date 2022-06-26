@@ -109,7 +109,7 @@ OPNA is {-}
 OUT is "->D62"
 @+90
 MDEN is high
-RD is "D0D1"
+RD is "X0X1"
 note bottom of RD: ADDRESS = 0
 @+10
 MDEN is low
@@ -122,10 +122,10 @@ OUT is "->D63"
 
 @:lasthalf+400
 OPNA is {-}
-OUT is "->D0"
+OUT is "->X0"
 @+90
 MDEN is high
-RD is "D2D3"
+RD is "X2X3"
 @+10
 MDEN is low
 @+70
@@ -133,15 +133,15 @@ RD is {-}
 
 @:lasthalf+500
 OPNA is {-}
-OUT is "->D1"
+OUT is "->X1"
 
 
 @:lasthalf+600
 OPNA is {-}
-OUT is "->D2"
+OUT is "->X2"
 @+90
 MDEN is high
-RD is "D4D5"
+RD is "X4X5"
 @+10
 MDEN is low
 @+70
@@ -155,11 +155,11 @@ RD is {-}
 
 @:stopseq
 OPNA is "R00:$A1"
-OUT is "->D3"
+OUT is "->X3"
 note top of OPNA: STOP
 @+70
 OPNA is {-}
-OUT is "~D3"
+OUT is "~X3"
 EOS is high
 @:stopseq+100
 OPNA is "R00:$00"
