@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
                 stat[i][s[i]]++;
             }
         }
-        if (opt_m && (s[2] != 0))
+        if (opt_m && ((diff & 128) && (s[2] == 0)))
         {
             stat[2][1]++;
         }
@@ -211,15 +211,29 @@ int main(int argc, char *argv[])
                 }
                 else if (stat[i][0] != 0 && stat[i][1] == 0)
                 {
-                    sv[i] = 0x1000;
+                    if (stat[i][0] == 1)
+                    {
+                        sv[i] = -0x4000;
+                    }
+                    else
+                    {
+                        sv[i] = -0x6000;
+                    }
                 }
                 else if (stat[i][0] != 0 && stat[i][1] != 0)
                 {
-                    sv[i] = 0x4000;
+                    sv[i] = 0x2000;
                 }
                 else if (stat[i][0] == 0 && stat[i][1] != 0)
                 {
-                    sv[i] = 0x6000;
+                    if (stat[i][1] == 1)
+                    {
+                        sv[i] = 0x6000;
+                    }
+                    else
+                    {
+                        sv[i] = 0x7fff;
+                    }
                 }
                 stat[i][0] = stat[i][1] = 0;
             }

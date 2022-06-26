@@ -20,6 +20,7 @@ mem_rw2_mden
 mem_rw3_mden
 mem_rw4_mden
 mem_rw5_mden
+mem_rw6_mden
 "
 
 
