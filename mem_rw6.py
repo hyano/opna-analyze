@@ -15,7 +15,6 @@ rs.reset()
     0002 40-5F
 
 2. READ ADDRESS 0001-0002 (32Bx3 +2B)
-    LIMIT ADDRESSにヒットしない、通常の読み出しの挙動の確認(LIMIT=ffff)
     ダミーリード(5F,5F)
     データは20-5F(EOS)
     STOP ADDRESSに到達したときにEOSビットが1になる
@@ -25,8 +24,7 @@ rs.reset()
 3. PLAY 0000
 
 4. READ ADDRESS 0001-0002 (32Bx3 +2B)
-    LIMIT ADDRESSにヒットしない、通常の読み出しの挙動の確認(LIMIT=ffff)
-    ダミーリード(5F,5F)
+    ダミーリード(1F,1F)
     データは20-5F(EOS)
     STOP ADDRESSに到達したときにEOSビットが1になる
     STOP ADDRESS後にダミーリードが挟まる(5F,5F)
@@ -35,8 +33,7 @@ rs.reset()
 5. PLAY 0001
 
 6. READ ADDRESS 0001-0002 (32Bx3 +2B)
-    LIMIT ADDRESSにヒットしない、通常の読み出しの挙動の確認(LIMIT=ffff)
-    ダミーリード(5F,5F)
+    ダミーリード(3F,3F)
     データは20-5F(EOS)
     STOP ADDRESSに到達したときにEOSビットが1になる
     STOP ADDRESS後にダミーリードが挟まる(5F,5F)
@@ -45,7 +42,6 @@ rs.reset()
 7. PLAY 0002
 
 8. READ ADDRESS 0001-0002 (32Bx3 +2B)
-    LIMIT ADDRESSにヒットしない、通常の読み出しの挙動の確認(LIMIT=ffff)
     ダミーリード(5F,5F)
     データは20-5F(EOS)
     STOP ADDRESSに到達したときにEOSビットが1になる
@@ -53,9 +49,7 @@ rs.reset()
     データは20,...,3C,3D
 
 全体
-    STOP ADDRESSとLIMIT ADDRESSが同じ場合、先にSTOP ADDRESSがヒットする
-    STOP ADDRESSにヒットした場合は、START ADDRESSに戻り、再度ダミーリードがかかる
-    LIMIT ADDRESSがヒットした場合は、0番地に戻り、ダミーリードはかからない
+    ADPCM再生の最後のデータがその後の読み出し時のダミーリードに現れる
 
 '''
 
