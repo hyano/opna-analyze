@@ -100,7 +100,7 @@ FM音源エミュレータの精度向上の役に立てばと思っています
 |STOP ADDRESS   |0x0001 |
 |LIMIT ADDRESS  |0xffff |
 
-![STOP ADDRESSを超えて読み出した時の動作](../chart/mem_read_repeat.png)
+![STOP ADDRESSを超えて読み出した時の動作](../chart/mem_read_cont.png)
 
 * 32バイト目のデータを読み出したところで、ステータスレジスタのEOSビットが1になる。
 * 33バイト目の読み出しでSTART ADDRESSに戻る。
