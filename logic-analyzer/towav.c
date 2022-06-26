@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
             printf("  -l length (seconds)\n");
             printf("  -w skip silent data\n");
             printf("  -s with status data (pcmbusy)\n");
-            printf("  -s with MDEN signal (no pcmbusy status)\n");
+            printf("  -m with MDEN signal (no pcmbusy status)\n");
             exit(1);
             break;
         }
