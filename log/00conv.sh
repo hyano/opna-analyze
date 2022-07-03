@@ -9,6 +9,7 @@ adpcm_play_limit_pcmbusy
 MDEN="
 adpcm_play_mden
 adpcm_play2_mden
+adpcm_play3_mden
 adpcm_play_limit2_mden
 adpcm_play_limit3_mden
 adpcm_play_limit4_mden
