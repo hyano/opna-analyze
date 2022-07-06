@@ -11,6 +11,7 @@ adpcm_play_mden
 adpcm_play2_mden
 adpcm_play3_mden
 adpcm_play4_mden
+adpcm_play5_mden
 
 adpcm_play_limit2_mden
 adpcm_play_limit3_mden
