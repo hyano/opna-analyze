@@ -35,7 +35,7 @@ class RsOPNA:
 
     def inp(self, reg):
         cmd = "2,{:02X}\r".format(reg)
-        self.sned(cmd)
+        self.send(cmd)
         return self
 
     def stat(self):
