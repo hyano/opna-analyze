@@ -57,28 +57,6 @@ t+=1
 pat = pat_orig
 mem_set(pat, t, "PAT {:d}".format(t))
 t+=1
-'''
-pat[63] = 0x77
-mem_set(pat, t, "PAT {:d}".format(t))
-t+=1
-pat[63] = 0xff
-mem_set(pat, t, "PAT {:d}".format(t))
-t+=1
-
-pat[62] = 0x4f
-mem_set(pat, t, "PAT {:d}".format(t))
-t+=1
-pat[62] = 0xf3
-mem_set(pat, t, "PAT {:d}".format(t))
-t+=1
-pat[62] = 0xff
-mem_set(pat, t, "PAT {:d}".format(t))
-t+=1
-
-pat[61] = 0x77
-mem_set(pat, t, "PAT {:d}".format(t))
-t+=1
-'''
 
 for i in range(0, t):
     test(i, False, "TEST {:d}".format(i))
