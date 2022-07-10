@@ -29,7 +29,7 @@ REPEATビットを"0"にした状態でメモリを書き込むテスト
 
 
 5. READ ADDRESS 0000-0000
-    ダミーリード(DF,61)
+    ダミーリード(DF,DF)
     データは00-1F(EOS)
 
 6. READ ADDRESS 0fff-1000
