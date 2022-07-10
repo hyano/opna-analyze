@@ -233,6 +233,10 @@ int main(int argc, char *argv[])
                     else
                     {
                         sv[i] = 0x7fff;
+                        if (opt_m && i == 2)
+                        {
+                            printf("signal count = %d @ %d\n", stat[i][1], num_sample);
+                        }
                     }
                 }
                 stat[i][0] = stat[i][1] = 0;
