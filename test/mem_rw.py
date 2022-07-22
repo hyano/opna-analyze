@@ -52,7 +52,7 @@ rs.open()
 rs.reset()
 
 '''
-1. WRITE ADDRESS 0000-0000 (00-1F)
+1. WRITE ADDRESS 0000-0001 (00-3F)
 2. WRITE ADDRESS 0fff-1000 (40-7F)
 3. WRITE ADDRESS 0fff-0xfff x 2 (80-9F/A0-BF)
     START ADDRESSに戻ることが確認できる
@@ -61,6 +61,7 @@ rs.reset()
 
 書き込み後のメモリの状態
     0000 00-1F
+    0000 20-3F
     0fff A0-BF
     1000 60-7F
     1fff C0-DF
@@ -111,6 +112,7 @@ rs.reset()
     読み出し後にSTOP ADDRESSを0fffから1000に書き換えるテスト
     10バイト読んだ後で、STOPアドレスを1000に変更すると、0fff終端に達しても、止まらず進む
     データはA0-BF,60-7F(EOS),7F,7F,A0-BF,60-7F(EOS)
+    ダミーリード(20,21,A0,A1)
 
 12. READ ADDRESS 1fff-1fff
     データはC0-DF(EOS)
@@ -125,26 +127,26 @@ rs.reset()
 '''
 
 rs.seq_mem_limit(0xffff)
-rs.seq_mem_write(0x0000, 0x0000, 0x00, 32, "WRITE ADDRESS 0000-0000 (00-1F)")
-rs.seq_mem_write(0x0fff, 0x1000, 0x40, 64, "WRITE ADDRESS 0fff-1000 (40-7F)")
-rs.seq_mem_write(0x0fff, 0x0fff, 0x80, 64, "WRITE ADDRESS 0fff-0xfff x 2 (80-9F/A0-BF)")
-rs.seq_mem_write(0x1fff, 0x1fff, 0xc0, 32, "WRITE ADDRESS 1fff-1fff (C0-DF)")
+rs.seq_mem_write(0x0000, 0x0001, 0x00, 64, "1. WRITE ADDRESS 0000-0001 (00-3F)")
+rs.seq_mem_write(0x0fff, 0x1000, 0x40, 64, "2. WRITE ADDRESS 0fff-1000 (40-7F)")
+rs.seq_mem_write(0x0fff, 0x0fff, 0x80, 64, "3. WRITE ADDRESS 0fff-0xfff x 2 (80-9F/A0-BF)")
+rs.seq_mem_write(0x1fff, 0x1fff, 0xc0, 32, "4. WRITE ADDRESS 1fff-1fff (C0-DF)")
 
-rs.seq_mem_read(0x0000, 0x0000, 34, "READ ADDRESS 0000-0000")
-rs.seq_mem_read(0x0fff, 0x1000, 66, "READ ADDRESS 0fff-1000")
-rs.seq_mem_read(0x0fff, 0x0fff, 68, "READ ADDRESS 0fff-0xfff x 2")
+rs.seq_mem_read(0x0000, 0x0000, 34, "5. READ ADDRESS 0000-0000")
+rs.seq_mem_read(0x0fff, 0x1000, 66, "6. READ ADDRESS 0fff-1000")
+rs.seq_mem_read(0x0fff, 0x0fff, 68, "7. READ ADDRESS 0fff-0xfff x 2")
 #test_mem_read_repeat(0x0fff, 0x0fff, 68, "READ ADDRESS 0fff-0xfff x 2 REPEAT")
-test_mem_read_start(0x0fff, 0x1000, 0x1000, 1, 66+34-1, "READ ADDRESS 0fff- CHANGE START(1)")
-test_mem_read_start(0x0fff, 0x1000, 0x1000, 10, 66+34-10, "READ ADDRESS 0fff- CHANGE START(10)")
-test_mem_read_start(0x0fff, 0x0000, 0x1000, 10, 66+34-10, "READ ADDRESS 0fff- CHANGE START(10/RESET)")
+test_mem_read_start(0x0fff, 0x1000, 0x1000, 1, 66+34-1, "8. READ ADDRESS 0fff- CHANGE START(1)")
+test_mem_read_start(0x0fff, 0x1000, 0x1000, 10, 66+34-10, "9. READ ADDRESS 0fff- CHANGE START(10)")
+test_mem_read_start(0x0fff, 0x0000, 0x1000, 10, 66+34-10, "10. READ ADDRESS 0fff- CHANGE START(10/RESET)")
 rs.reset()
-test_mem_read_stop(0x0fff, 0x0fff, 0x1000, 10, 66+66-10, "READ ADDRESS 0fff- CHANGE STOP")
-rs.seq_mem_read(0x1fff, 0x1fff, 34, "READ ADDRESS 1fff-1fff")
+test_mem_read_stop(0x0fff, 0x0fff, 0x1000, 10, 66+66-10, "11. READ ADDRESS 0fff- CHANGE STOP")
+rs.seq_mem_read(0x1fff, 0x1fff, 34, "12. READ ADDRESS 1fff-1fff")
 
 
 rs.msg("READ / WRITE MIX")
 rs.reset()
-test_mem_read_write(0x0000, 0x0000, 10, 68-10-1, "READ ADDRESS 0000-0000 (10 WRITE)")
+test_mem_read_write(0x0000, 0x0000, 10, 68-10-1, "13. READ ADDRESS 0000-0000 (10 WRITE)")
 
 
 '''
