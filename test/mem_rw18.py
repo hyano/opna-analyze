@@ -53,7 +53,7 @@ REC=1でREADした時の挙動の確認 (REPEATを変えて、過剰に読み出
 
 7. READ ADDRESS 0000-0000 (REC=1/REPEAT=1)
     REC=1/REPEAT=1でREADする(68バイト)
-    データは20のまま、BRDY=1を維持する
+    2バイト目以降、BRDY=0のまま変わらない
     EOSは1にならない
     MDEN信号は0のままで、メモリアクセスしていない
     データは20-20
@@ -66,7 +66,7 @@ REC=1でREADした時の挙動の確認 (REPEATを変えて、過剰に読み出
 
 全体
     REC=1でSTOP ADDRESSを超えてREADしても、EOSは1にならない
-    REC=1/REPEAT=1でREADすると、メモリアクセスは発生しBRDY=1も維持するが、CPUに読み出される値は変化しない
+    REC=1/REPEAT=1でREADした場合も、REPEAT=0の場合と同様の動作となる
 
 '''
 
