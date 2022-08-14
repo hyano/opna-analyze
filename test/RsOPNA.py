@@ -26,7 +26,7 @@ class RsOPNA:
     def send(self, cmd):
         self.ser.write(cmd.encode())
         self.wait()
-        self
+        return self
 
     def out(self, reg, data):
         cmd = "1,{:02X},{:02X}\r".format(reg, data)
@@ -87,9 +87,11 @@ class RsOPNA:
 
     def reset(self):
         self.out(0x00, 0x01).out(0x00, 0x00).nl()
+        return self
 
     def seq_mem_limit(self, adr):
         self.out(0x0c, adr & 0xff).out(0x0d, (adr >> 8) & 0xff)
+        return self
 
     def seq_mem_write(self, start, stop, data, count, msg):
         self.msg(msg)
@@ -100,6 +102,7 @@ class RsOPNA:
         self.nl()
         self.mwr(data, count).nl()
         self.out(0x00, 0x00).out(0x10, 0x80).nl()
+        return self
 
     def seq_mem_read(self, start, stop, count, msg):
         self.msg(msg)
@@ -110,6 +113,7 @@ class RsOPNA:
         self.nl()
         self.mrd(count).nl()
         self.out(0x00, 0x00).out(0x10, 0x80).nl()
+        return self
 
     def seq_mem_fill(self, start, stop, data, count, msg):
         self.msg(msg)
@@ -123,6 +127,7 @@ class RsOPNA:
                 print("\n{:05x} ".format(i), end="")
             self.out(0x08, data)
         self.out(0x00, 0x00).out(0x10, 0x80).nl()
+        return self
 
     def seq_mem_fill_pat(self, start, stop, pat, count, msg):
         self.msg(msg)
@@ -137,6 +142,7 @@ class RsOPNA:
                 print("\n{:05x} ".format(i), end="")
             self.out(0x08, pat[i % l])
         self.out(0x00, 0x00).out(0x10, 0x80).nl()
+        return self
 
     def seq_mem_fill_random(self, start, stop, count, msg):
         self.msg(msg)
@@ -150,6 +156,7 @@ class RsOPNA:
                 print("\n{:05x} ".format(i), end="")
             self.out(0x08, random.randint(0x00, 0xff))
         self.out(0x00, 0x00).out(0x10, 0x80).nl()
+        return self
 
     def seq_play(self, start, stop, deltan, volume, repeat, msg):
         self.msg(msg)
@@ -165,8 +172,10 @@ class RsOPNA:
         else:
             self.out(0x00, 0xa0)
         self.nl()
+        return self
 
     def seq_stop(self, msg):
         self.msg(msg)
         self.out(0x00, 0xa1).poll_stat(0.1)
         self.out(0x00, 0x00).poll_stat(0.1).out(0x10, 0x80).poll_stat(0.1).nl()
+        return self
